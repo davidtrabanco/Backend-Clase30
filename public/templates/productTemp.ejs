@@ -1,0 +1,22 @@
+<% if(listExists){ %>
+    <table class="u-full-width">
+        <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th class="five columns">Imágen</th>
+            </tr>
+        </thead>
+        <tbody >
+            <% productsList.forEach(product => { %>
+                <tr>
+                    <th><%= product.title %></th>
+                    <th>$<%= product.price %></th>
+                    <th class="five columns"><img src="<%= product.thumbnail %>" alt="" style="border-radius:5%;"></th>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+<% } else { %>
+    <h2>No hay productos</h2>  
+<% } %>

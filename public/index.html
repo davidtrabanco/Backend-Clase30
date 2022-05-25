@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/skeleton.css">
+
+    <title>Clase 12</title>
+
+    <script src="/socket.io/socket.io.js"></script>
+    
+    <script src="./js/ejs.min.js"></script>
+
+    <script language="JavaScript">
+        const confirmLogout = ()=>{
+            if( confirm("¿Desea cerrar la sesión?")){
+                document.logoutForm.submit()
+            }
+    }
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <nav class="user-menu u-full-width">
+
+        <div>
+            <h5 style="color:rgb(0, 143, 209);"> Bienvenido <span id="user-name"></span> </h5>
+        </div>
+
+        <div>
+            <form action="/register" method="get" name="logoutForm">
+                <button type="button" id="logout-button" onclick="confirmLogout()" class="button-primary u-pull-right">Cerrar Sesión</button>
+            </form>
+        </div>
+        
+       
+    </nav>
+
+    <div class="row">
+
+        <h5 style="color:rgb(0, 55, 80)"><b>Productos</b></h5>
+        <!-- <h5>Ingrese Nuevo Producto</h5>
+
+        <div>
+            <form action="" id="newProductFrom">
+                Producto<input type="text" id="title" required>
+                Precio<input type="text" id="price" required>
+                Imágen<input type="text" id="thumbnail" required>
+                <button type="submit" class="bttnCreateProd button-primary" form="newProductFrom">Cargar</button>
+            </form>
+        </div> -->
+
+    </div>
+
+    <div class="row">
+
+        <div class="container">
+
+            <div class='productsLit u-full-width'>
+                <!-- Aquí inserto tabla productos -->
+            </div>
+
+        </div>
+        
+
+    </div>
+
+    <div class="row">
+
+        <h5 style="color:rgb(0, 55, 80)"><b>Chat</b> <span id="msgTitle"></span></h5>
+
+        <div>
+            <form onsubmit="" id="sendMessageForm">
+                <div class="container">
+                    <div class="row">
+                        <div class="row">
+                            <div class="three columns">
+                                <label for="msj.email">e-mail</label>
+                                <input  type="email" id="msj.email" required placeholder="usuario@dominio.com" form="sendMessageForm">
+                            </div>
+                            <div class="three columns">
+                                <label for="msj.name">Nombre</label>
+                                <input type="text" id="msj.name" required placeholder="Pepe" form="sendMessageForm">
+                            </div>
+                            <div class="three columns">
+                                <label for="msj.lastname">Apellido</label>
+                                <input type="text" id="msj.lastname" required placeholder="Gomez" form="sendMessageForm">
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="three columns">
+                                <label for="msj.age">Edad</label>
+                                <input type="number" id="msj.age" required placeholder="34" form="sendMessageForm">
+                            </div>
+                            <div class="three columns">
+                                <label for="msj.nickname">Apodo</label>
+                                <input type="text" id="msj.nickname" required placeholder="Pepito" form="sendMessageForm">
+                            </div>
+                            <div class="three columns">
+                                <label for="msj.avatar">Avatar</label>
+                                <input type="text" id="msj.avatar" placeholder="https://cdn1.iconfinder.com/data/icons/user-pictures/100/male3-256.png" form="sendMessageForm">
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class='chat container'>
+
+                    <div class="row nine columns">
+
+                        <ul class="messagesList">
+                            <!-- Aquí inserto chats -->
+                        </ul>
+
+                    </div>
+
+                </div>
+
+                <div class="container">
+
+                    <div class="row">
+
+                        <input type="text" id="msj.message" class="seven columns" required form="sendMessageForm" placeholder="Mensaje">
+                        <button type="submit" form="sendMessageForm" class="bttnSendMsg button-primary two columns">Enviar</button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"> </script>
+    <script type="module" src="./js/index.js"></script>
+    <script type="module" src="./js/products.js"></script>
+    <script type="module" src="./js/chat.js"></script>
+</body>
+</html>

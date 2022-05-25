@@ -1,0 +1,4 @@
+<% messages.forEach( message => { %>
+    <% let info = `${message.author.name} ${message.author.lastname} (${message.author.age}) | ${message.author.email}` %>
+    <li> <img src=<%= message.author.avatar %> width="50" height="50"  title="<%= info %>" > <span> <b><i><%= message.author.nickname %></i></b></span>: <span> <br> <%= message.text %> </span> </li>
+<% }); %>
