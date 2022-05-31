@@ -1,30 +1,42 @@
-import express from "express";
-import { Server as IOServer } from "socket.io";
-import { Server as HttpServer } from "http";
-import session from "express-session";
-import MongoStore from "connect-mongo";
+import config from "./config.js";
 
-import {initWebSocket} from "./src/sockets/index.js";
-import {router} from "./src/routes/index.js";
+//VARIABLES DE ENTORNO
+import dotenv from "dotenv";
+if (process.env.NODE_ENV !== 'production'){
+    dotenv.config();
+}
 
-//creo un servidor HTTP y websockets
+
+//creo un servidor Express:
+import express, { application } from "express";
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+//Configuro templates:
+app.set('view-engine', 'ejs')
+
+//Configuro WebSockets:
+import { Server as IOServer } from "socket.io";
+import { Server as HttpServer } from "http";
 const httpServer = new HttpServer(app);
 export const io = new IOServer(httpServer);
 
-//inicio los WebSockets:
+//Inicializo los WebSockets:
+import {initWebSocket} from "./src/sockets/index.js";
 initWebSocket(io);
 
-//Configuro cookies con Mongo Atlas:
+
+//Configuro Session Cookies:
+import session from "express-session";
+import MongoStore from "connect-mongo";
+import flash from "connect-flash";
 app.use(session({
     store: MongoStore.create({
-        mongoUrl: "mongodb+srv://davidtrabanco:74108520@cluster0.zbawm.mongodb.net/?retryWrites=true&w=majority",
+        mongoUrl: config.MongoDB.URL + '/Clase26',
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true},
     }),
-    secret: "123456",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
     rolling: true,
@@ -32,13 +44,31 @@ app.use(session({
         maxAge: 1 * 60000,
     },
 }))
+app.use(flash());
+
+
+//Configuro e Inicializo Passport
+import passport from "passport";
+import {initiliazePassport} from "./passport-config.js";
+app.use(passport.initialize());
+app.use(passport.session());
+initiliazePassport(passport);
+passport.authenticate()
+
 
 //Configuro Rutas y Public
+import {router} from "./src/routes/index.js";
+//Middleware para guardar los mensajes de flash
+app.use( (req,res,next)=>{
+    console.log(`Access to URL: ${req.url} --> Method: ${req.method}`);
+    res.locals.message = req.flash( 'status');
+    next();
+})
 app.use("/", router)
 app.use(express.static('./public'));
 
 
 //Inicio Servidor:
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 const activeServer = httpServer.listen(PORT, ()=>console.log(`HTTP Server Up on Port ${activeServer.address().port}`))
 activeServer.on('error', err => console.error(err));

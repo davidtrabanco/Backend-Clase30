@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+    
+</head>
+<body>
+    
+    <div class="container">
+
+        <h2>Nuevo Usuario</h2>
+
+        <% if( message) { %>
+            <h6 style="color:rgb(236, 3, 3);"> <b> <%= message %> </b> </h6>
+        <% } %>
+
+        <form id="signupForm" action="/signup" method="post">
+
+            <div class="row six columns" >
+
+                <div class="">
+                    <input class="u-full-width" type="email" id="email" name="email" required placeholder="e-mail">
+                </div>
+                <div class="">
+                    <input class="u-full-width" type="text" id="name" name="name" required placeholder="Nombre">
+                </div>
+                <div class="">
+                    <input class="u-full-width" type="text" id="lastname" name="lastname" required placeholder="Apellido">
+                </div>
+                <div class="">
+                    <input class="u-full-width" type="text" id="nickname" name="nickname" required placeholder="Apodo">
+                </div>
+                <div class="">
+                    <input class="u-full-width" type="text" id="age" name="age" required placeholder="Edad">
+                </div>
+                <div class="">
+                    <input class="u-full-width" type="text" id="avatar" name="avatar" required placeholder="Avatar">
+                </div>
+
+                <div class="">
+                    <input class="u-full-width" type="password" id="password" name="password" required placeholder="Contraseña">
+                </div>
+
+                <div class="">
+                    <button type="submit" class="button button-primary u-full-width">Crear</button>
+                </div>
+
+                <div>
+                    <a class="button button-secondary u-full-width" href="/login">Ingresar</a>
+                </div>
+
+            </div>
+        
+        </form>
+        
+    </div>
+    
+</body>
+</html>
+

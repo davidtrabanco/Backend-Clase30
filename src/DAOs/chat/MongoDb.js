@@ -1,4 +1,5 @@
 import MongoDBManager from "../../Container/mongoDBManager.js";
+import config from "../../../config.js";
 
 //MongoDB:
 const schema = { 
@@ -13,11 +14,11 @@ const schema = {
     text : {type: String},
 };
 
-const urlConnection = `mongodb+srv://${'davidtrabanco'}:${'74108520'}@cluster0.zbawm.mongodb.net/${'chat'}`;
+const urlConnection = config.MongoDB.URL + '/Clase26';
 
 const collection = 'messages';
 
-export default class MongoDbDAO extends MongoDBManager{
+export default class chatMongoDbDAO extends MongoDBManager{
     constructor(){
         super(urlConnection, collection, schema)
     }

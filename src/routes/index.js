@@ -1,14 +1,24 @@
 import {Router} from "express";
-import {loginCheck} from "./Middleware/login.js";
+import {isAuthenticated} from "./Middleware/checkIsAuthenticated.js";
+import {authLogin} from "./Middleware/authtenticateLogin.js";
 import {controller} from "./Controller/index.js";
 
 //Declaro el router Productos:
 export const router = Router();
 
-//valido que el usuario esté registrado:
-router.use( loginCheck )
+//Index
+router.get('/', isAuthenticated('next', '/login'))
 
 //ruta para registrar usuario
-router.post("/register", controller.registerLogin)
+router.get("/signup", controller.showSignupForm)
+router.post("/signup", controller.signup)
 
-router.get("/register", controller.registerLogout)
+//Login:
+router.get('/login', isAuthenticated('/', 'next'), controller.showLoginForm)
+router.post('/login', authLogin, controller.login)
+
+//Logout
+router.post('/logout', isAuthenticated('next', '/login'), controller.logout)
+
+//valido que el usuario esté registrado:
+router.use( isAuthenticated('next', '/login') )

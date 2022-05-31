@@ -1,6 +1,6 @@
 import {socketProducts} from "./products.js";
 import {socketChat} from "./chat.js";
-import {socketLoginUser} from "./loginUser.js";
+import {socketLogedUser} from "./User.js";
 
 export const initWebSocket = (io) =>{
 
@@ -11,6 +11,6 @@ export const initWebSocket = (io) =>{
     socketChat(io);
 
     //Envío usuario:
-    socketLoginUser(io);
-
+    socketLogedUser(io);
 }
+

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+     
+</head>
+<body>
+    
+    <div class="container">
+
+        <h2>Ingresar</h2>
+
+        <% if( message ) { %>
+            <h6 style="color:rgb(236, 3, 3);"> <b> <%= message %> </b> </h6>
+        <% } %>
+
+
+        <form id="loguinForm" action="/login" method="post">
+
+            <div class="row six columns" >
+
+                    <div class="">
+                        <input class="u-full-width" type="email" id="email" name="email" required placeholder="email">
+                    </div>
+    
+                    <div class="">
+                        <input class="u-full-width" type="password" id="password" name="password" required placeholder="Password">
+                    </div>
+    
+                    <div class="row">
+                        <button type="submit" class="button button-primary u-full-width">Ingresar</button>
+                        <a class="button button-secondary u-full-width" href="/signup">Nuevo usuario</a>
+                    </div> 
+ 
+            </div>
+        
+        </form>
+        
+    </div>
+    
+</body>
+</html>
+

@@ -8,5 +8,8 @@ export default {
     login :{
         user : null,
     },
+    MongoDB:{
+        URL: "mongodb+srv://davidtrabanco:74108520@cluster0.zbawm.mongodb.net",
+    },
     dirname : _dirname,
 }
