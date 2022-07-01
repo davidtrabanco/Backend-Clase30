@@ -1,14 +1,16 @@
 import config from "./config.js";
 
-//VARIABLES DE ENTORNO
-import dotenv from "dotenv";
-if (process.env.NODE_ENV !== 'production'){
-    dotenv.config();
-}
-
+//Configuro YARGS: argumentos de entrada:
+import _yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+const yargs = _yargs(hideBin(process.argv))
+yargs
+    .alias({p: 'PORT', m: 'MODE'})
+    .default({p: 3000, m: 'FORK'})
+const {PORT, MODE} = yargs.argv
 
 //creo un servidor Express:
-import express, { application } from "express";
+import express from "express";
 const app = express();
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -36,7 +38,7 @@ app.use(session({
         mongoUrl: config.MongoDB.URL + '/Clase26',
         mongoOptions: { useNewUrlParser: true, useUnifiedTopology: true},
     }),
-    secret: process.env.SESSION_SECRET,
+    secret: config.sessionSecret,
     resave: true,
     saveUninitialized: false,
     rolling: true,
@@ -61,14 +63,17 @@ import {router} from "./src/routes/index.js";
 //Middleware para guardar los mensajes de flash
 app.use( (req,res,next)=>{
     console.log(`Access to URL: ${req.url} --> Method: ${req.method}`);
-    res.locals.message = req.flash( 'status');
+    res.locals.message = req.flash('status');
     next();
 })
 app.use("/", router)
 app.use(express.static('./public'));
 
+//Obtengo la cant de CPUs
+const OSinfo = await import('os');
+config.numCPUs = OSinfo.cpus().length;;
 
-//Inicio Servidor:
-const PORT = process.env.PORT;
-const activeServer = httpServer.listen(PORT, ()=>console.log(`HTTP Server Up on Port ${activeServer.address().port}`))
-activeServer.on('error', err => console.error(err));
+//EN BASE AL MODO (FORK O CLUSTER) INICIO EL SERVER:
+import {startServer} from "./initCluster.js";
+startServer( MODE, PORT, httpServer);
+

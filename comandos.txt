@@ -1,0 +1,28 @@
+PUERTO POR DEFECTO: 3000
+
+>Forever:
+    forever start .\server.js --p 8080 --m cluster
+    forever list
+    tasklist /fi "imagename eq node.exe" 
+    forever stopall
+
+>PM2:
+    pm2 start .\server.js --name="ServerCluster" --watch -- -- --p 8081 --m cluster
+    pm2 start .\server.js --name="ServerFork" --watch -- -- --p 8080 --m fork
+    pm2 start .\server.js --name="ServerClusterPM2" --watch -i max -- -- --p 8080 --m fork (no acepta puerto)
+    pm2 list
+    pm2 delete all
+    pm2 delete id
+    taskkill /pid pid /f
+
+>NGINX:
+    node .\server.js --p 8081 --m cluster
+    node .\server.js --p 8080
+
+>NGINX 4 instancias para Randoms:
+    node .\server.js --p 8080
+    node .\server.js --p 8082
+    node .\server.js --p 8083
+    node .\server.js --p 8084
+    node .\server.js --p 8085
+

@@ -1,7 +1,7 @@
 import config from "../../../config.js";
 import {usersDbDAO} from "../../DAOs/index.js";
 import bcrypt from "bcrypt";
-import {authLogin} from "../Middleware/authtenticateLogin.js";
+import {getRandom} from "./numRandom.js";
 
 export const controller = {};
 
@@ -43,4 +43,33 @@ controller.logout = (req,res)=>{
     `);
     req.session.destroy();
     res.redirect('/login');
+}
+
+controller.randoms = async (req,res)=>{
+    const qty = req.params.qty ? req.params.qty : 10e7;
+    res.json(await getRandom(qty))
+}
+
+controller.info = (req, res) => {
+    res.send(`INFORMACIÓN DEL PROCESO:
+    <br>
+    Fecha y Hora: ${new Date().toLocaleDateString()} | ${new Date().toLocaleTimeString()}
+    <br>
+    Argumentos de entrada: ${process.argv.slice(2)}
+    <br>
+    Plataforma: ${process.platform}
+    <br>
+    Versión de NodeJs: ${process.versions.node}
+    <br>
+    Memoria Reservada: ${process.memoryUsage.rss()}
+    <br>
+    Path de ejecución: ${process.execPath}
+    <br>
+    <b> Process ID: ${process.pid} </b>
+    <br>
+    <b> Cantidad de CPUs: ${config.numCPUs} </b>
+    <br>
+    Carpeta del proyecto: ${config.dirname}
+    `)
+ 
 }
